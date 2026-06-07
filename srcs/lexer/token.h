@@ -1,11 +1,13 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
-# include "compiler.h"
+# include <stddef.h>
+
+typedef struct s_lexer Lexer;
 
 typedef enum {
 	TOKEN_EOF,
-	
+
 	TOKEN_IDENTIFIER,
 	TOKEN_NUMBER,
 	TOKEN_STRING,
@@ -17,9 +19,14 @@ typedef enum {
 	TOKEN_RETURN,
 	TOKEN_PUBLIC,
 	TOKEN_PRIVATE,
+	TOKEN_INT_LITERAL,
+	TOKEN_FLOAT_LITERAL,
+	TOKEN_DO,
 
 	TOKEN_COLON,
 	TOKEN_SEMICOLON,
+	TOKEN_COMMA,
+	TOKEN_DOT,
 	TOKEN_ARROW,
 
 	TOKEN_LPAREN,
@@ -35,19 +42,25 @@ typedef enum {
 
 	TOKEN_INDENT,
 	TOKEN_DEDENT,
+	TOKEN_NEWLINE,
 }	Token_type;
 
-typedef struct {
-	Token_type	type;
-	char		*lex;
-	int		line;
-	int		column;
-}		Token;
+typedef struct s_token {
+	Token_type		type;
+	char			*lex;
+	int			line;
+	int			column;
+}       Token;
 
 typedef struct {
     Token	*data;
     size_t	count;
     size_t	capacity;
+    size_t	curr;
 }		TokenArray;
+
+TokenArray	*creat_dynamic_token(void);
+void push_token(TokenArray* arr, Token token);
+TokenArray	*tokenize(Lexer *lexer);
 
 #endif

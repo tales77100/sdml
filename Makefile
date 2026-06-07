@@ -1,6 +1,7 @@
 FILE_FILES = srcs/files/files_creation.c
 
-LEXER_FILES = srcs/lexer/lexer_main.c
+LEXER_FILES = srcs/lexer/lexer_main.c \
+	srcs/lexer/token_main.c
 
 PARSER_FILES = srcs/parser/parser_main.c
 
@@ -11,7 +12,7 @@ FILES = srcs/main.c	\
 
 OBJETS = $(FILES:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra -I42_compatible_sds/includes -Iincludes -Isrcs/files  -Isrcs/parser  -Isrcs/lexer -g3
+CFLAGS = -Wall -Werror -Wextra -I42_compatible_sds/includes -Isrcs/files  -Isrcs/parser  -Isrcs/lexer -Iincludes  -g3
 
 CC = cc
 

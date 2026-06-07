@@ -4,7 +4,7 @@
 # include "compiler.h"
 
 typedef struct {
-	struct Token* tokens;
+	Token* tokens;
 	size_t count;
 	size_t current;
 }		Parser;
