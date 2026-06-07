@@ -96,8 +96,7 @@ Early development.
 
 Planned milestones:
 
-- Lexer implementation
-- Parser implementation
+- Parser tree
 - AST generation
 - Semantic analysis
 - Bytecode VM or LLVM backend
