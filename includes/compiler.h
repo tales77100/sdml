@@ -1,7 +1,7 @@
 #ifndef COMPILER_H
 # define COMPILER_H
 
-# include "sds.h"
+# include "../42_compatible_sds/includes/sds.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -11,9 +11,11 @@
 # include "../srcs/parser/parser.h"
 # include "../srcs/lexer/lexer.h"
 # include "../srcs/files/files.h"
+# include "../srcs/ast/ast.h"
+
 
 Files *make_file_nodes(char **files);
 Parser *launch_new_parser(Files *head);
-Parser	*parse(Parser *parser);
+Parser	*parse(Parser *parser, bool *success);
 
 #endif

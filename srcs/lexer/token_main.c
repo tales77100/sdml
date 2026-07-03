@@ -2,7 +2,7 @@
 
 TokenArray	*creat_dynamic_token(void)
 {
-	TokenArray	*ret = calloc(sizeof(TokenArray), 1);
+	TokenArray	*ret = calloc(1, sizeof(TokenArray));
 	if (!ret)
 		return (NULL);
 	ret->data = malloc(sizeof(Token) * 2);

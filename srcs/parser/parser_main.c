@@ -2,7 +2,7 @@
 
 Parser *launch_new_parser(Files *head)
 {
-	Parser *parser = calloc(sizeof(Parser), 1);
+	Parser *parser = calloc(1, sizeof(Parser));
 	if (!parser)
 		return (NULL);
 	Lexer *lexer = get_full_lex(head);
@@ -76,8 +76,11 @@ void	print_tokens(Parser *parser)
 	printf("\n");
 }
 
-Parser	*parse(Parser *parser)
+Parser	*parse(Parser *parser, bool *s)
 {
+	//if (evaluate_parsing(parser))
+	//	return ((*s = false), parser);
 	print_tokens(parser);
+	*s = true;
 	return (parser);
 }

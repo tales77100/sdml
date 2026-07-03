@@ -3,7 +3,8 @@ FILE_FILES = srcs/files/files_creation.c
 LEXER_FILES = srcs/lexer/lexer_main.c \
 	srcs/lexer/token_main.c
 
-PARSER_FILES = srcs/parser/parser_main.c
+PARSER_FILES = srcs/parser/parser_main.c \
+				srcs/parser/parser_evaluate.c
 
 FILES = srcs/main.c	\
 	$(FILE_FILES)	\

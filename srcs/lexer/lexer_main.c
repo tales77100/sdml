@@ -19,12 +19,12 @@ sds	read_whole_file(char *filename)
 Lexer	*get_full_lex(Files *files)
 {
 	sds	ret = new_string("");
-	Lexer	*lex = calloc(sizeof(Lexer), 1);
+	Lexer	*lex = calloc(1, sizeof(Lexer));
 
 	while (files && files->filename)
 	{
-		//if (sdslen(files->filename) < 3 || strcmp(&(files->filename[sdslen(files->filename) - 4]), ".sdm"))
-			//return (free_sds(ret), free(lex), NULL);
+		if (strcmp(strrchr(files->filename, '.'), ".sdm"))
+			return (NULL);
 		ret = sdsjoin(ret, read_whole_file(files->filename), 3);
 		ret = sdscat(ret, "\n");
 		files = files->next;

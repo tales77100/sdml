@@ -16,7 +16,12 @@ int	main(int ac, char *av[])
 	}
 	Files	*head = make_file_nodes(av + 1);
 	Parser *new_parser = launch_new_parser(head);
-	parse(new_parser);
+	bool	s;
+	if (!new_parser)
+		return (1);
+	parse(new_parser, &s);
+	if (!s)
+		printf("has had an error\n");
 	free_sds(head->filename);
 	free_all_tokens(new_parser->tokens, new_parser->count);
 	free(head);
