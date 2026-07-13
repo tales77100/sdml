@@ -9,4 +9,6 @@ typedef struct {
 	size_t current;
 }		Parser;
 
+bool	evaluate_parsing(Parser *parser);
+
 #endif

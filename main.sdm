@@ -1,18 +1,21 @@
+
 func main(int: argc, *string: argv) -> int:
-  ...;
-  ...;
-  ...;
-  if (...) do:
-    ...; 
-    while (...) do:
-      ...;
-  return (0);
+	int: i = 0;
+	string: s;
+
+	if (s == "") do:
+		print("hello!");
+	else do:
+		print("hallo!");
+	while (i < 10) do:
+		print("this is i -> :", i++);
+	return (0);
 
 
 class foo:
-  public:
-    ...;
-  private:
-    ...;
+public:
+	...;
+private:
+	...;
 
 main();

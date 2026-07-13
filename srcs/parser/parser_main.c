@@ -59,6 +59,7 @@ void	print_tokens(Parser *parser)
 			case TOKEN_INT_LITERAL: tname = "TOKEN_INT_LITERAL"; break;
 			case TOKEN_FLOAT_LITERAL: tname = "TOKEN_FLOAT_LITERAL"; break;
 			case TOKEN_DO: tname = "TOKEN_DO"; break;
+			case TOKEN_ELSE: tname = "TOKEN_ELSE"; break;
 			default: tname = "TOKEN_UNKNOWN"; break;
 		}
 		printf("Type: %s, Line: %d, Column: %d, Token: |%s|\n",
@@ -78,8 +79,8 @@ void	print_tokens(Parser *parser)
 
 Parser	*parse(Parser *parser, bool *s)
 {
-	//if (evaluate_parsing(parser))
-	//	return ((*s = false), parser);
+	if (!evaluate_parsing(parser))
+		return (printf("there was an error!\n"), (*s = false), parser);
 	print_tokens(parser);
 	*s = true;
 	return (parser);

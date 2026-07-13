@@ -21,7 +21,7 @@ int	main(int ac, char *av[])
 		return (1);
 	parse(new_parser, &s);
 	if (!s)
-		printf("has had an error\n");
+		printf("has had an error at token [%s] at [line=%d --- collumn=%d]\n", new_parser->tokens[new_parser->current].lex, new_parser->tokens[new_parser->current].line, new_parser->tokens[new_parser->current].column);
 	free_sds(head->filename);
 	free_all_tokens(new_parser->tokens, new_parser->count);
 	free(head);

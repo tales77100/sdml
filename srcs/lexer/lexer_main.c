@@ -79,6 +79,10 @@ Token_type	get_token_type(sds token_lex)
 		return (TOKEN_EQUAL);
 	if (strcmp(token_lex, "==") == 0)
 		return (TOKEN_EQUAL_EQUAL);
+	if (strcmp(token_lex, "else") == 0)
+		return (TOKEN_ELSE);
+	if (token_lex[0] == '"')
+		return (TOKEN_STRING);
 	return (TOKEN_IDENTIFIER);
 }
 
@@ -182,6 +186,12 @@ Token	*get_next_token(Lexer *lexer)
 		lexer->pos += 2;
 	else if (c == '=' && lexer->src[lexer->pos + 1] == '=')
 		lexer->pos += 2;
+	else if (c == '"')
+	{
+		while (lexer->src[lexer->pos + 1] != '"')
+			lexer->pos++;
+		lexer->pos += 2;
+	}
 	else
 		lexer->pos++;
 
