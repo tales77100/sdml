@@ -1,21 +1,22 @@
 
-func main(int: argc, *string: argv) -> int:
+func main(int: argc, string*: argv) -> int:
 	int: i = 0;
 	string: s;
 
-	if (s == "") do:
-		print("hello!");
-	else do:
-		print("hallo!");
-	while (i < 10) do:
-		print("this is i -> :", i++);
+	if s == "" do:
+		{std}print("hello!");
+	elif s != "" do:
+		{std}print("hallo!");
+	else:
+		{std}print("what happened?");
+		return (1);
+	while i < 10 do:
+		{std}print("this is i -> :", i++);
 	return (0);
 
 
 class foo:
-public:
-	...;
-private:
-	...;
-
-main();
+	public:
+		...;
+	private:
+		...;

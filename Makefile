@@ -1,4 +1,10 @@
-FILES =	srcs/main.c \
+FILE_FILES = srcs/File/File.c
+
+PARSER_FILES = srcs/Parser/Parser.c
+
+FILES = $(FILE_FILES)\
+		$(PARSER_FILES)\
+		srcs/main.c
 
 BUILDDIR = build/
 OBJ = $(FILES:%.c=$(BUILDDIR)%.o)
