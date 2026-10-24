@@ -1,43 +1,28 @@
-FILE_FILES = srcs/files/files_creation.c
+FILES =	srcs/main.c \
 
-LEXER_FILES = srcs/lexer/lexer_main.c \
-	srcs/lexer/token_main.c
+BUILDDIR = build/
+OBJ = $(FILES:%.c=$(BUILDDIR)%.o)
 
-PARSER_FILES = srcs/parser/parser_main.c \
-				srcs/parser/parser_evaluate.c
-
-FILES = srcs/main.c	\
-	$(FILE_FILES)	\
-	$(LEXER_FILES)	\
-	$(PARSER_FILES)	\
-
-OBJETS = $(FILES:.c=.o)
-
-CFLAGS = -Wall -Werror -Wextra -I42_compatible_sds/includes -Isrcs/files  -Isrcs/parser  -Isrcs/lexer -Iincludes  -g3
-
+CFLAGS = -Wall -Wextra -Werror -Iincludes -g3
 CC = cc
-
-SDS_LIB = 42_compatible_sds/sds.a 
 
 NAME = sdmlc
 
 all: $(NAME)
 
-$(NAME): $(OBJETS)
-	make -C 42_compatible_sds
-	$(CC) $(CFLAGS) $(OBJETS) $(SDS_LIB) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(BUILDDIR)$(NAME)
+
+$(BUILDDIR)%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	make clean -C 42_compatible_sds
-	rm -rf $(OBJETS)
+	rm -rf $(BUILDDIR)
 
-fclean: clean
-	make fclean -C 42_compatible_sds
-	rm -rf $(NAME)
-
-re: fclean all
+re: clean all
 
 run: re $(NAME)
-	./sdmlc main.sdm
+	$(BUILDDIR)$(NAME) main.sdm
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re run
