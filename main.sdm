@@ -18,5 +18,5 @@ func main(int: argc, string*: argv) -> int:
 class foo:
 	public:
 		...;
-	private:
+	private
 		...;

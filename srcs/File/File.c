@@ -1,34 +1,24 @@
 #include "sdmllang.h"
 
 
-int sdml_strncpy(char *dest, char *src, size_t size)
+void printFile(File file)
 {
-    if (!dest || !src) return (0);
-    size_t destSize = sdml_strlen(dest);
-    for (size_t i = 0; src[i] || i > size; i++)
-    {
-        dest[destSize + i] = src[i];
-    }
-    dest[destSize + size] = '\0';
-    return (1);
+    printf("file( %s ) of size( %zu ):\n%s", file.name, file.size, file.content);
 }
 
-char *getWholeFile(char *name, size_t *size)
+char *getWholeFile(char *name)
 {
-    char buff[FILEREADSIZE];
+    char buff[FILEREADSIZE + 1];
     int fd = -1;
     if ((fd = open(name, O_RDONLY)) == -1) return (close(fd), NULL);
     ssize_t readRet = 0;
-    char *retBuff = NULL;
+    char *retBuff = calloc(FILEREADSIZE * 2, sizeof(char));
     while ((readRet = read(fd, buff, FILEREADSIZE)) > 0)
     {
-        if (!retBuff)
-            retBuff = calloc(FILEREADSIZE + 1, sizeof(char));
-        else
-            retBuff = realloc(retBuff, sizeof(retBuff) + FILEREADSIZE + 1);
+        buff[readRet] = '\0';
+        retBuff = realloc(retBuff, strlen(retBuff) + strlen(buff) + 2);
         if (!retBuff) return (close(fd), NULL);
-        if (!sdml_strncpy(&retBuff[sdml_strlen(retBuff)], buff, sdml_strlen(buff))) return (close(fd), free(retBuff), NULL);
-        size += readRet;
+        if (!strncpy(&retBuff[strlen(retBuff)], buff, strlen(buff))) return (close(fd), free(retBuff), NULL);
     }
     return (close(fd), retBuff);
 }
@@ -53,7 +43,8 @@ File *getFiles(char **names)
     if (!root) return (NULL);
     for (size_t i = 1; names[i]; i++)
     {
-        headSeaking->content = getWholeFile(names[i], &headSeaking->size);
+        headSeaking->content = getWholeFile(names[i]);
+        headSeaking->size = strlen(headSeaking->content);
         if (!headSeaking->content) return (freeFiles(root), NULL);
         headSeaking->name = names[i];
         if (names[i + 1])

@@ -1,16 +1,10 @@
 #include "../includes/sdmllang.h"
 
-size_t sdml_strlen(const char *str)
-{
-	size_t len = 0;
-	while (str && str[len])
-		len++;
-	return (len);
-}
 
 int TODO(const char *msg)
 {
-	write(1, msg, sdml_strlen(msg));
+	write(1, "[ TODO ]: ", 11);
+	write(1, msg, strlen(msg));
 	return (1);
 }
 
@@ -22,7 +16,7 @@ int	howToUse()
 
 int putERROR(const char *msg)
 {
-	write(1, msg, sdml_strlen(msg));
+	write(1, msg, strlen(msg));
 	return (0);
 }
 

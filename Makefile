@@ -1,9 +1,13 @@
 FILE_FILES = srcs/File/File.c
 
-PARSER_FILES = srcs/Parser/Parser.c
+AST_FILES = srcs/AST/AST.c \
 
-FILES = $(FILE_FILES)\
-		$(PARSER_FILES)\
+PARSER_FILES = srcs/Parser/Parser.c \
+		srcs/Parser/Lexer.c 		\
+
+FILES = $(FILE_FILES)	\
+		$(PARSER_FILES)	\
+		$(AST_FILES)	\
 		srcs/main.c
 
 BUILDDIR = build/
