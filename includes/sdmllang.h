@@ -74,11 +74,6 @@ typedef struct s_Lexer
     Token   *last;
 }           Lexer;
 
-typedef struct s_Parser
-{
-    
-}           Parser;
-
 typedef struct s_AST
 {
 
@@ -103,11 +98,10 @@ void freeLexer(Lexer *lexer);
 int addToken(Lexer *lexer, size_t line, size_t collumn, Type type);
 Type getTypeFromChar(char c);
 
-int parseInput(Parser *parser, File *files);
-int freeParser(Parser parser);
+int parseInput(Lexer *lexer, File *files);
 
 
-int createAST(Parser *parser, AST *ast);
+int createAST(Lexer *lexer, AST *ast);
 
 
 

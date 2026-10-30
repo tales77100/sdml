@@ -55,16 +55,57 @@ int addToken(Lexer *lexer, size_t line, size_t collumn, Type type)
     return (1);
 }
 
-char *findWordInText(Token *it)
+/* here i give the first word token,
+* using the trueIndex i find the start of the word,
+* then i search for the last chained WORD token
+* and take it as the end of the word i substr the word using those index,
+* i then remove the word token after the first one
+*/
+
+char *findWordInText(Token *it, Lexer *lexer)
 {
-    (void) it;
-    TODO("substr the it->indexFromContent to last WORD indexFromContent and remove everyone in between\n");
-    return (strdup(""));
+    if (!it || it->type != WORD || !it->file || !it->file->content
+        || it->indexFromcontent >= it->file->size)
+        return (NULL);
+
+    size_t end = it->indexFromcontent;
+    Token *last = it;
+    for (Token *next = it->next; next && next->type == WORD
+        && next->file == it->file && next->indexFromcontent == end + 1; next = next->next)
+    {
+        end = next->indexFromcontent;
+        last = next;
+    }
+
+    size_t length = end - it->indexFromcontent + 1;
+    if (length == (size_t)-1)
+        return (NULL);
+    char *word = malloc(length + 1);
+    if (!word)
+        return (NULL);
+    memcpy(word, it->file->content + it->indexFromcontent, length);
+    word[length] = '\0';
+
+    Token *next = last->next;
+    Token *removed = it->next;
+    it->next = next;
+    while (removed != next)
+    {
+        Token *token = removed;
+        removed = removed->next;
+        free(token->toString);
+        free(token);
+    }
+    if (lexer && last->next == NULL)
+        lexer->last = it;
+
+    return (word);
 }
 
 
-static char *typeToText(Type type, Token *t)
+static char *typeToText(Lexer *lexer, Token *t)
 {
+    Type type = t->type;
     switch (type)
     {
         case LPARENT:        return strdup("(");
@@ -95,7 +136,7 @@ static char *typeToText(Type type, Token *t)
         case MINUS:          return strdup("-");
         case DASH:           return strdup("/");
         case PERCENT:        return strdup("%");
-        case WORD:           return findWordInText(t);
+        case WORD:           return findWordInText(t, lexer);
         case UNDEFINED:      return strdup("<undefined>");
         default:             return strdup("<unknown>");
     }
@@ -169,15 +210,11 @@ void freeLexer(Lexer *lexer)
 int cleanLexer(Lexer *lexer)
 {
     for (Token *it = lexer->tokens; it; it = it->next)
-    {
         if (it->type == UNDEFINED)
-        {
             it->type = WORD;
-            it->toString = typeToText(WORD, it);
-        }
-        else
-            it->toString = typeToText(it->type, it);
-    }
+
+    for (Token *it = lexer->tokens; it; it = it->next)
+        it->toString = typeToText(lexer, it);
     
     return (1);
 }

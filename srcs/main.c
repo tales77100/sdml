@@ -24,15 +24,15 @@ int main(int ac, char **av)
 {
 	if (ac < 2) return (howToUse());
 	if (ac > 3) return (TODO("implement multi files as an input\n"));
-	Parser parser;
 	File *files = getFiles(av);
 	if (!files)
 		return (putERROR(FILEERROR), 1);
-	if (!parseInput(&parser, files))
+	Lexer lexer = {0};
+	if (!parseInput(&lexer, files))
 		return (freeFiles(files), 1);
 	AST ast;
 	freeFiles(files);
-	if (!createAST(&parser, &ast))
-		return (freeParser(parser), 1);
+	if (!createAST(&lexer, &ast))
+		return (freeLexer(&lexer), 1);
 	return (makeBin(&ast));
 }

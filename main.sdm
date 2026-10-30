@@ -1,22 +1,38 @@
 
-func main(int: argc, string*: argv) -> int:
+using std;
+
+std.version();
+
+extern "asm" func _start(*func(...) -> int) -> int:
+	// write yor asm basic is x86-64 linux put "ARM asm" for arm etc...
+	mov rax, 60
+	xor rdi, rdi
+	syscall
+
+class foo:
+	public:
+		func methode():
+			print("int methode");
+	private
+		...;
+
+func main(void) -> int:
 	int: i = 0;
 	string: s;
 
 	if s == "" do:
-		{std}print("hello!");
+		print("hello!");
 	elif s != "" do:
-		{std}print("hallo!");
+		print("hallo!");
 	else:
-		{std}print("what happened?");
+		print("what happened?");
 		return (1);
+	foo.methode()
 	while i < 10 do:
-		{std}print("this is i -> :", i++);
+		print("this is i -> :", i++);
 	return (0);
 
+_start(&main); // if you want argc argv and envp
 
-class foo:
-	public:
-		...;
-	private
-		...;
+main(); // if nothing then you have full control you can write your own _start
+
